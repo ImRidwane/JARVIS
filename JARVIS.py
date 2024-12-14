@@ -4,6 +4,8 @@ import requests
 import openai
 from datetime import datetime
 import sys
+import os
+import subprocess
 
 # Initialize the speech recognition and text-to-speech engines
 r = sr.Recognizer()
@@ -84,7 +86,45 @@ def get_weather(location="New York"):
         return f"The current temperature at your location is {temp}°F with {description}."
     except requests.exceptions.RequestException as e:
         return f"Sorry, I couldn't fetch the weather. Error: {e}"
+
+def handle_file_management(command):
+    """Handle file management operations like creating, deleting, and listing files."""
+    if "create file" in command:
+        # Create a new text file
+        filename = "new_file.txt"
+        with open(filename, "w") as f:
+            f.write("This is a new file.")
+        speak(f"A file named {filename} has been created.")
     
+    elif "delete file" in command:
+        # Delete a specified file
+        filename = "new_file.txt"
+        if os.path.exists(filename):
+            os.remove(filename)
+            speak(f"The file {filename} has been deleted.")
+        else:
+            speak(f"The file {filename} does not exist.")
+    
+    elif "list files" in command:
+        # List all files in the current directory
+        files = os.listdir(".")
+        speak(f"The files in this directory are: {', '.join(files)}")
+
+def handle_system_commands(command):
+    """Execute system commands."""
+    if "run command" in command:
+        # Run a system command (e.g., 'dir' for Windows or 'ls' for Linux/macOS)
+        if sys.platform == "win32":
+            command_to_run = "dir"
+        else:
+            command_to_run = "ls"
+        
+        try:
+            output = subprocess.check_output(command_to_run, shell=True, text=True)
+            speak(f"Here is the output of the command: {output}")
+        except subprocess.CalledProcessError as e:
+            speak(f"An error occurred while running the command: {e}")
+
 def process_command(command):
     """Process the recognized command and perform actions."""
     print(f"Processing command: {command}")  # Debugging line
@@ -108,6 +148,13 @@ def process_command(command):
     elif "goodbye" in command:
         speak("Goodbye! Have a great day!")
         sys.exit()
+
+    # Handle file and system management commands
+    elif "file" in command:
+        handle_file_management(command)
+
+    elif "run system command" in command:
+        handle_system_commands(command)
 
     else:
         speak("I'm sorry, I didn't understand that command.")
