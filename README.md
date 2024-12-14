@@ -33,7 +33,7 @@ This Python-based project leverages cutting-edge programming concepts to provide
 # Installation  
 1. Clone the Repository:  
    ```bash  
-   git clone https://github.com/YourUsername/JARVIS.py.git  
+   git clone https://github.com/ImRidwane/JARVIS.py.git  
    cd JARVIS.py  
    ```  
 2. **Install Dependencies**:  
