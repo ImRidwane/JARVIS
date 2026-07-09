@@ -89,10 +89,5 @@ This project uses environment variables for all API keys. If you fork this repo,
 
 ---
 
-# Contribution  
-Contributions are welcome! Please fork the repository and submit a pull request. For significant changes, open an issue to discuss your ideas first.  
-
----
-
 ## License  
 This project is licensed under the [MIT License](LICENSE).
