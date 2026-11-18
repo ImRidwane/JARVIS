@@ -1,6 +1,8 @@
 openai>=1.0.0
-SpeechRecognition
-pyttsx3
 requests
 python-dotenv
-pyaudio
+
+# Voice (optional). The agent runs headless without these.
+SpeechRecognition
+pyttsx3
+# pyaudio  # required by SpeechRecognition's Microphone on most platforms
